@@ -1,6 +1,8 @@
 import streamlit as st
 import random
 import matplotlib.pyplot as plt
+import pandas as pd
+import altair as alt
 
 # Título de la aplicación con emoji
 st.title("⚖️ Ética en la Era del Big Data - Exposición Interactiva 📊")
@@ -59,20 +61,42 @@ elif seccion == "⚙️ Sesgo Algorítmico":
     st.header("⚙️ Sesgo Algorítmico")
     st.write("""
     Aunque los algoritmos se presentan como neutrales, en realidad, los datos sobre los que se basan están llenos de sesgos históricos. Esto afecta desproporcionadamente a las minorías y a las personas en barrios pobres.
+    
+    Ajusta los niveles de vigilancia en los barrios para ver cómo cambia el número de arrestos. 🎯
     """)
-    
-    st.write("🎯 Vamos a visualizar el impacto de la vigilancia en barrios pobres y ricos:")
-    
-    # Visualización de la criminalización
-    barrios = ['Barrio Pobre', 'Barrio Rico']
-    arrestos = [50, 5]  # Número de arrestos en cada barrio
 
-    fig, ax = plt.subplots()
-    ax.bar(barrios, arrestos, color=['red', 'blue'])
-    ax.set_title('Criminalización de la Pobreza')
-    ax.set_xlabel('Tipo de Barrio')
-    ax.set_ylabel('Número de Arrestos')
-    st.pyplot(fig)
+    # Deslizadores para controlar el nivel de vigilancia en los barrios
+    vigilancia_pobre = st.slider("📉 Nivel de vigilancia en el barrio pobre", 0, 100, 50)
+    vigilancia_rico = st.slider("📈 Nivel de vigilancia en el barrio rico", 0, 100, 50)
+
+    # Simular el número de arrestos en función del nivel de vigilancia
+    arrestos_pobre = int(vigilancia_pobre * 1.5)  # Barrio pobre más sensible a la vigilancia
+    arrestos_rico = int(vigilancia_rico * 0.8)    # Barrio rico menos afectado por vigilancia
+
+    # Crear un DataFrame con los datos
+    data = pd.DataFrame({
+        'Barrio': ['Barrio Pobre', 'Barrio Rico'],
+        'Arrestos': [arrestos_pobre, arrestos_rico]
+    })
+
+    # Crear gráfico con Altair
+    chart = alt.Chart(data).mark_bar().encode(
+        x='Barrio',
+        y='Arrestos',
+        color='Barrio'
+    ).properties(
+        title='Impacto de la Vigilancia en los Arrestos'
+    )
+
+    # Mostrar el gráfico
+    st.altair_chart(chart, use_container_width=True)
+
+    st.write(f"📊 **Arrestos en el barrio pobre:** {arrestos_pobre}")
+    st.write(f"📊 **Arrestos en el barrio rico:** {arrestos_rico}")
+
+    st.write("""
+    Como puedes ver, al aumentar la vigilancia en el barrio pobre, el número de arrestos crece más rápidamente que en el barrio rico, lo que refuerza el sesgo algorítmico.
+    """)
 
 # Sección 4: Justicia vs Eficiencia
 elif seccion == "⚖️ Justicia vs Eficiencia":
