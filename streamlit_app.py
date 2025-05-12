@@ -188,6 +188,7 @@ def slide_criminalizacion():
 
 # Función principal para ejecutar la aplicación de Streamlit
 def run():
+    slide_intro()
     st.sidebar.title("📝 Navegar entre Secciones")
     option = st.sidebar.selectbox("Elige la sección que deseas ver:", 
                                   ("📰 Introducción", 
