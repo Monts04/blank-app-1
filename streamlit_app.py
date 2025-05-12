@@ -189,9 +189,15 @@ def slide_criminalizacion():
 # Función principal para ejecutar la aplicación de Streamlit
 def run():
     slide_intro()
-    st.sidebar.title("Navegar entre Secciones")
-    option = st.sidebar.selectbox("Elige la sección que deseas ver:", ("Introducción", "Herramientas Metodológicas", "Los Periódicos Monárquicos", "Simulación de Opinión Pública", "Evolución de los Temas en los Periódicos", "¿Por qué es importante entenderlo hoy en día?", "Conclusión"))
-    
+    st.sidebar.title("📝 Navegar entre Secciones")
+    option = st.sidebar.selectbox("Elige la sección que deseas ver:", 
+                                  ("📰 Introducción", 
+                                   "📜 Herramientas Metodológicas", 
+                                   "📰 Los Periódicos Monárquicos", 
+                                   "📊 Simulación de Opinión Pública", 
+                                   "📈 Evolución de los Temas en los Periódicos", 
+                                   "🔴 Criminalización de la Pobreza y PredPol", 
+                                   "📝 Conclusión"))
     if option == "Introducción":
         slide_intro()
     elif option == "Herramientas Metodológicas":
